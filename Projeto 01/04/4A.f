@@ -13,8 +13,8 @@
         EPS = ABS(LOG(X) - FLOG)
         I = I + 1
       END DO
-
-      WRITE(*,*) LOG(X) 
-      WRITE(*,*) FLOG 
+      
+      WRITE(*,*)'O valor pelo Fortran nativo', LOG(X) 
+      WRITE(*,*)'O valor pela série', FLOG 
 
       END

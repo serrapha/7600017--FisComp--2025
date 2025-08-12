@@ -27,7 +27,12 @@
       PROGRAM ESFERA
       INTEGER N
       REAL iGAM
+      REAL PI
+      PI = 3.14159
       WRITE(*,*) 'Dimensão N a ser calculada'
       READ(*,*) N
-      WRITE(*,*) iGAM(N)
+      VOLE = iGAM(N)/SQRT(PI**N)
+      WRITE(*,*) 'A razão é: ', VOLE
+      VOLEI = iGAM(19)/SQRT(PI**25)
+      WRITE(*,*) 'Para o infinito: ', VOLEI
       END
