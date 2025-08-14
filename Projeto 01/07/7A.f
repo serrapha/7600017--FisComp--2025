@@ -48,7 +48,7 @@
       WRITE(*,*) 'Insira a quantidade de dimensões:'
       READ(*,*) dimensions
 
-      DO i = 1, dimensions
+      DO i = 0, dimensions
         volume = (raio ** REAL(i)) * (SQRT(pi**REAL(i))/GAMMA(1.0
      & + (REAL(i)/2)))
         WRITE(arquivo, *) volume

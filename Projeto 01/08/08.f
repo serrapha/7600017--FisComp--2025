@@ -1,38 +1,54 @@
-      FUNCTION FACT (I)
-              INTEGER I, J 
-              REAL RES
-              J = I
-              RES = 1.0
-              DO WHILE (J .GT. 1)
-                RES = RES * J
-                J = J - 1
-              END DO
-              FACT = RES
-              RETURN
-      END FUNCTION
-
-      FUNCTION IGAM (M)
-              INTEGER M 
-              REAL PI, IGAM
-              PI = 3.14159
-              IF (MOD(M,2) .EQ. 0) THEN
-              iGAM = FACT(M/2)
+      REAL FUNCTION GAMMA(d)
+              IF ((d - INT(d)) .NE. 0) THEN
+                      GAMMA = GAMMA_HALF_INT(d)
               ELSE
-              iGAM = sqrt(pi) * FACT(M) / (2**M * FACT((M-1)/2))
+                      gamma = GAMMA_INT(d)
               END IF
               RETURN
-              END FUNCTION
-
-
-      PROGRAM ESFERA
-      INTEGER N
-      REAL iGAM
-      REAL PI
-      PI = 3.14159
-      WRITE(*,*) 'Dimensão N a ser calculada'
-      READ(*,*) N
-      VOLE = iGAM(N)/SQRT(PI**N)
-      WRITE(*,*) 'A razão é: ', VOLE
-      VOLEI = iGAM(19)/SQRT(PI**25)
-      WRITE(*,*) 'Para o infinito: ', VOLEI
       END
+
+      REAL FUNCTION GAMMA_INT(d)
+              REAL d, pi
+              PARAMETER (pi = 3.14159265358979323846)
+
+              n = d - 1
+              GAMMA_INT = 1
+              DO i = 1, n
+                GAMMA_INT = GAMMA_INT * i
+              END DO
+      END
+                
+      REAL FUNCTION GAMMA_HALF_INT(d)
+              REAL d, pi
+              PARAMETER (pi = 3.14159265358979323846)
+              
+              n = INT(d) / 2
+              
+              IF (n .EQ. 0) THEN
+                GAMMA_HALF_INT = SQRT(pi) / 2.0 
+              ELSE
+                GAMMA_HALF_INT = 2.0
+                DO i = 1, n
+                  GAMMA_HALF_INT = GAMMA_HALF_INT * (2.0 * i - 1.0)
+                END DO
+                GAMMA_HALF_INT = GAMMA_HALF_INT * SQRT(pi) / (2.0**n)
+              ENDIF
+              RETURN
+      END
+
+      PROGRAM VOLUMES
+      REAL raio, pi
+      INTEGER ARQUIVO, dimensions
+      PARAMETER (pi = 3.14159265358979323846)
+
+      WRITE(*,*) 'Insira o raio que você deseja calcular:'
+      READ(*,*) raio
+      WRITE(*,*) 'Insira a quantidade de dimensões:'
+      READ(*,*) dimensions
+
+      DO i = 1, dimensions
+        volume = (raio ** REAL(i)) * (SQRT(pi**REAL(i))/GAMMA(1.0
+     & + (REAL(i)/2)))
+        WRITE(*,*) (2.0**REAL(i))/volume
+      END DO
+      END   

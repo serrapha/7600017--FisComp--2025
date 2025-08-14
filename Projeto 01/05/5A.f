@@ -17,7 +17,7 @@
       linhas = FATORIAL(numeros)
       colunas = numeros + 1
 
-      OPEN(UNIT=arquivo, FILE='numeros.txt', STATUS='OLD')
+      OPEN(UNIT=arquivo, FILE='4.txt', STATUS='OLD')
 
       DO i=1,linhas
         READ(arquivo,*) (MATRIX(i,j), j=1, colunas)
@@ -71,7 +71,7 @@
 
       !Fim da criação
 
-      !Debugging
+      !Escrevendo num arquivo
       DO i=1, linhas
         WRITE(*,*) 'Vetor', i
         DO j=1, colunas
@@ -87,4 +87,17 @@
           WRITE(*,*)NEW_MATRIX(i,j)
         END DO
       END DO
+
+      !Escrevendo em um arquivo
+      OPEN(UNIT=20, FILE='5.txt', STATUS='REPLACE')
+
+      DO i = 1, new_linhas
+        DO j = 1, numeros + 1
+          WRITE(20, '(I2, 1X)', ADVANCE='NO') NEW_MATRIX(i, j)
+        END DO
+        WRITE(20, '(I3)') NEW_MATRIX(i, new_colunas)
+      END DO
+
+      CLOSE(20)
+
       END 
