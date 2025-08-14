@@ -29,23 +29,51 @@
       !Criação de nova matriz
       new_linhas = FATORIAL(numeros + 1)
       new_colunas = numeros + 2
-      DO i=1,linhas
-        DO j=1,colunas
-          IF (j .EQ. colunas) THEN
-                  NEW_MATRIX(i,j) = numeros + 1
-          ELSE
-                  k = MATRIX(i,j)
-                  NEW_MATRIX(i,j) = numeros + 1
-                  NEW_MATRIX(i, colunas) = k
-          END IF
-          NEW_MATRIX(i, new_colunas) = MATRIX(i,colunas) * (-1)**(numero
-     &s + 1 - j)
+      !Para cada linha, eu crio N cópias na Matriz de Saída
+      DO i=1, linhas
+        DO j = 0, numeros
+          DO k = 1, numeros+1
+            NEW_MATRIX((4*i) - j, k) = MATRIX(i, k)
+          END DO
         END DO
       END DO
+
+      !Começar a substituir
+      DO i=1, new_linhas, numeros+1
+        DO j=0, numeros
+          IF (j+1 .EQ. colunas) THEN
+                  NEW_MATRIX(i+j, j+1) = numeros+1
+          ELSE
+          k = NEW_MATRIX(i+j, j+1)
+          NEW_MATRIX(i+j, j+1) = numeros+1
+          NEW_MATRIX(i+j, colunas) = k
+          END IF
+        END DO
+      END DO
+
+      !Checando a paridade de cada vetor
+      DO i=1, new_linhas
+        M = 0
+        DO j=1,colunas
+          DO k=j + 1, colunas
+            IF(NEW_MATRIX(i,j) .GT. NEW_MATRIX(i,k)) THEN
+                    M = M + 1
+            ELSE
+            END IF
+          END DO
+        END DO 
+      IF (MOD(M,2) .EQ. 0) THEN
+        NEW_MATRIX(i, new_colunas) = 1
+      ELSE
+        NEW_MATRIX(i, new_colunas) = -1
+      END IF
+      END DO
+
       !Fim da criação
 
       !Debugging
       DO i=1, linhas
+        WRITE(*,*) 'Vetor', i
         DO j=1, colunas
           WRITE(*,*)MATRIX(i,j)
         END DO
@@ -54,6 +82,7 @@
       WRITE(*,*) 'Divisão' 
 
       DO i=1, new_linhas
+        WRITE(*,*) 'Vetor ', i
         DO j=1, new_colunas
           WRITE(*,*)NEW_MATRIX(i,j)
         END DO
