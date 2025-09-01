@@ -46,9 +46,9 @@
       WRITE(*,*)'A variância é: ', N_MEDIA(soma, N, rmedia, 2, NUM_RA
      &ND)
       !Assimetria
-      WRITE(*,*)'A assimetria é: ', N_MEDIA(soma, N, rmedia, 3, NUM_RA
-     &ND)
+      WRITE(*,*)'O terceiro momento é: ', N_MEDIA(soma, N, rmedia, 3, 
+     &NUM_RAND)
       !Curtose
-      WRITE(*,*)'A curtose é: ', N_MEDIA(soma, N, rmedia, 4, NUM_RA
-     &ND) 
+      WRITE(*,*)'O quarto momento é: ', N_MEDIA(soma, N, rmedia, 4, NU
+     &M_RAND) 
       END 
