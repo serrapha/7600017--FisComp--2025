@@ -1,5 +1,10 @@
       PROGRAM ANDARILHOS
       INTEGER IP(1000, 2), MN(1000,2)
+      INTEGER arquivo
+
+      arquivo = 1   
+
+      OPEN(UNIT=arquivo, FILE='dados.dat', STATUS='UNKNOWN')
 
       WRITE(*,*) 'Quantos andarilhos?'
       READ(*,*) M
@@ -57,8 +62,10 @@
       END DO
       !Fim da criação
 
-      !Debugging
-      WRITE(*,*) 'O maximo é: ',MAXIMA
-      WRITE(*,*) 'O mínimo é: ',MINIMA
+      DO i=1,M
+        WRITE(arquivo,*)IP(i,1), IP(i,2)
+      END DO
+      CLOSE(UNIT=arquivo)
+
       !Fim Debugging
       END PROGRAM
