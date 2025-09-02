@@ -20,6 +20,8 @@
       READ(*,*) M
       WRITE(*,*) 'Quantidade de passos?'
       READ(*,*) N
+      WRITE(*,*) 'Probabilidade'
+      READ(*,*) prob
 
       !Organização da matriz de passos
       DO i = 1, M
@@ -32,7 +34,7 @@
         k = 0
         DO j = 1, N
           r = rand()
-          IF (r .GT. 0.5) THEN
+          IF (r .GT. prob) THEN
                   k = k + 1
           ELSE
                   k = k - 1
@@ -73,7 +75,9 @@
         MN(i+1-MINIMA,2) = k
       END DO
       !Fim da criação
-
+        
+      WRITE(*,*) 'O valor mínimo é: ', MINIMA
+      WRITE(*,*) 'O valor máximo é: ', MAXIMA
       rmedia = N_MEDIA(soma, M, 0.0, 1, IP)
       WRITE(*,*) 'A média é: ', N_MEDIA(soma, M, 0.0, 1, IP)
       WRITE(*,*) 'A variância é: ', N_MEDIA(soma, M, rmedia, 2, IP)
