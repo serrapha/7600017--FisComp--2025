@@ -1,5 +1,5 @@
       REAL FUNCTION N_MEDIA(N, rmedia, iord, NUM_RAND)
-              INTEGER NUM_RAND(1600,8)
+              COMPLEX NUM_RAND(1600,8)
               soma = 0
               DO i = 1, N
                 soma = soma + ((NUM_RAND(i,8) - rmedia))**iord
@@ -7,24 +7,30 @@
               N_MEDIA = soma/N
       END FUNCTION
 
-      REAL FUNCTION WALK(inicio)
+      COMPLEX FUNCTION WALK(inicio)
+        COMPLEX inicio
         r = rand()
-        IF (r .GT. 0.5) THEN
-                WALK = inicio + 1
+        IF (r .LT. 0.25) THEN
+                WALK = inicio + (1,0)
+        ELSE IF (r .LT. 0.5) THEN
+                WALK = inicio + (0,1)
+        ELSE IF (r. LT. 0.75) THEN
+                WALK = inicio + (-1,0)
         ELSE
-                WALK = inicio - 1
+                WALK = inicio + (0, -1)
         END IF
       END FUNCTION
 
       PROGRAM ANDARILHOS_2D
-      INTEGER IP(1600, 8)
-      INTEGER arquivo, passo
+      INTEGER arquivo
       REAL N_MEDIA
+      COMPLEX IP(1600, 8)
+      COMPLEX passo, WALK
       PARAMETER (N = 1E6) 
 
       arquivo = 1
       
-      OPEN(UNIT=arquivo, FILE='dados.dat', STATUS='UNKNOWN')
+      OPEN(UNIT=arquivo, FILE='dados.txt', STATUS='UNKNOWN')
 
       WRITE(*,*) 'Quantos andarilhos?'
       READ(*,*) M
@@ -34,7 +40,7 @@
       END DO
 
       DO i = 1, M
-        IP(i,2) = WALK(0)
+        IP(i,2) = WALK((0,0))
           DO j = 0, 5
           passo = IP(i,2+j) 
             DO k = 1, (9*10**j)
@@ -44,18 +50,15 @@
           END DO
       END DO
 
-      CLOSE(UNIT=arquivo)
-
       !Debugging
       DO i = 1, M
         WRITE(*,*)'Andarilho número: ', IP(i,1)
         DO j = 1, 7
           WRITE(*,*) IP(i, j+1)
         END DO
+        WRITE(arquivo,*)IP(i,1), IP(i,2), IP(i,3), IP(i,4), IP(i,5),  IP
+     &(i,6),IP(i,7), IP(i,8)
       END DO
-      
-      rmedia = N_MEDIA(M, 0.0, 1, IP)
-      WRITE(*,*) 'A média é: ', rmedia
-      WRITE(*,*) 'A variância é: ', N_MEDIA(M, rmedia, 2, IP)
-      !End
+
+      CLOSE(UNIT=arquivo)
       END PROGRAM
