@@ -54,7 +54,7 @@
       END DO
 
       MINIMA = IP(1,2)
-      DO i = 1, M
+      DO i = 1, a
         IF (MINIMA .GT. IP(i,2)) THEN
                 MINIMA = IP(i,2)
         ELSE

@@ -24,13 +24,9 @@
       PROGRAM ANDARILHOS_2D
       INTEGER arquivo
       REAL N_MEDIA
+      REAL ABSOLUTES(1600, 7), CIRCULOS(1600,7), ENTROPIA(1,7)
       COMPLEX IP(1600, 8)
       COMPLEX passo, media, WALK
-      PARAMETER (N = 1E6) 
-
-      arquivo = 1
-      
-      OPEN(UNIT=arquivo, FILE='dados.txt', STATUS='UNKNOWN')
 
       WRITE(*,*) 'Quantos andarilhos?'
       READ(*,*) M
@@ -50,17 +46,53 @@
           END DO
       END DO
 
-      !Média
-      media = N_MEDIA(M, 0.0, 1, IP)
-      WRITE(*,*) 'A média é: ', media
-      !Fim Média
-
-      !Debugging
+      !Tomar uma lista de valores absolutos/passo
       DO i = 1, M
-        WRITE(arquivo,*)IP(i,1), IP(i,2), IP(i,3), IP(i,4), IP(i,5),  IP
-     &(i,6),IP(i,7), IP(i,8)
+        DO j = 1, 7
+          ABSOLUTES(i, j) = CABS(IP(i, j+1))
+        END DO
       END DO
-      !Fim Debugging
 
-      CLOSE(UNIT=arquivo)
+      !Tomar uma lista de qual círculo contem cada andarilho
+      DO i = 1, M
+        DO j = 1,7
+          CIRCULOS(i,j) = INT(ABSOLUTES(i,j)/20)+1
+        END DO
+      END DO
+
+      !Cálculo de entropia 
+      DO i = 1,7
+      vez = 0
+        DO j = 1, 100
+        counter = 0
+          DO k = 1, M
+            IF (j .EQ. CIRCULOS(k,i)) THEN
+                   counter = counter + 1
+            ELSE
+            END IF
+          END DO
+        P = counter/M
+        IF (P .GT. 0) THEN
+          entrop = P * LOG(P)
+        ELSE
+          entrop = 0
+        END IF
+        vez = vez + entrop
+        END DO
+      ENTROPIA(1,i) = -vez
+      END DO
+      
+      !Debugging
+      DO i = 1,M
+      WRITE(*,*) 'Andarilho número', i
+        DO j = 1,7
+          WRITE(*,*)ABSOLUTES(i,j)
+          WRITE(*,*)CIRCULOS(i,j)
+        END DO
+      END DO
+
+      DO i = 1, 7
+        WRITE(*,*)ENTROPIA(1,i)
+      END DO
       END PROGRAM
+
