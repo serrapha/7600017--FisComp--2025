@@ -75,22 +75,14 @@
         IF (P .GT. 0) THEN
           entrop = P * LOG(P)
         ELSE
-          entrop = 0
+          entrop = -0
         END IF
         vez = vez + entrop
         END DO
       ENTROPIA(1,i) = -vez
       END DO
       
-      !Debugging
-      DO i = 1,M
-      WRITE(*,*) 'Andarilho número', i
-        DO j = 1,7
-          WRITE(*,*)ABSOLUTES(i,j)
-          WRITE(*,*)CIRCULOS(i,j)
-        END DO
-      END DO
-
+      !Display dos resultados
       DO i = 1, 7
         WRITE(*,*)ENTROPIA(1,i)
       END DO
