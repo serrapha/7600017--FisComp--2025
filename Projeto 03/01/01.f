@@ -15,28 +15,29 @@
 
       !Popular a segunda coluna com a derivada 2f
       DERIVADAS(i,2) = (F(X+DERIVADAS(i,1)) - F(X))/DERIVADAS(i,1)
-      WRITE(*,*) DERIVADAS(i,2)
 
       !Popular a terceira coluna com a derivada 2t
       DERIVADAS(i,3) = (F(X) - F(X-DERIVADAS(i,1)))/DERIVADAS(i,1)
-      WRITE(*,*) DERIVADAS(i,3)
 
       !Quarta coluna, 3s
       DERIVADAS(i,4) = (F(X + DERIVADAS(i,1)) - F(X - DERIVADAS(i,1)))/
-     &2*DERIVADAS(i,1)
-      WRITE(*,*) DERIVADAS(i,4)
+     &(2*DERIVADAS(i,1))
 
-      !Quinta coluna, 3s''
-      DERIVADAS(i,5) = (F(X+DERIVADAS(i,1))-2*F(X)+F(X-DERIVADAS(i,1)))
+      !Quinta coluna, 5s
+      DERIVADAS(i,5) = (F(X-2*DERIVADAS(i,1))-8*F(X-DERIVADAS(i,1)) +
+     & 8*F(X+DERIVADAS(i,1))-F(X+2*DERIVADAS(i,1)))/(12*DERIVADAS(i,1))
+
+      !Sexta coluna, 3s''
+      DERIVADAS(i,6) = (F(X+DERIVADAS(i,1))-2*F(X)+F(X-DERIVADAS(i,1)))
      &/DERIVADAS(i,1)**2 
-      WRITE(*,*) DERIVADAS(i,5)
 
-      !Sexta coluna, 5s''
-      DERIVADAS(i,6) = (F(X-2*DERIVADAS(i,1)) + 16*F(x-DERIVADAS(i,1)) 
-     &- 30*F(X) +16*F(X+DERIVADAS(i,1)) - F(X+2*DERIVADAS(i,1)))/12
-     &*(DERIVADAS(i,1))**2 
+      !Sétima coluna, 5s''
+      DERIVADAS(i,7) = (-F(X-2*DERIVADAS(i,1)) + 16*F(X-DERIVADAS(i,1)) 
+     &-30*F(X)+16*F(X+DERIVADAS(i,1)) - F(X+2*DERIVADAS(i,1)))/(12
+     &*((DERIVADAS(i,1))**2)) 
       END DO
         
-
-
+      DO i = 1, 12
+        WRITE(*, '(7G15.8)') (DERIVADAS(i,j), j = 1, 7)
+      END DO
       END PROGRAM
