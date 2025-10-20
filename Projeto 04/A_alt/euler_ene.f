@@ -1,4 +1,4 @@
-      PROGRAM EULER_POS
+      PROGRAM EULER_ENERGIA
 
       PARAMETER(PI = 3.1415927)
 
@@ -7,7 +7,7 @@
       WRITE(*,*) 'Eleja delta_t'
       READ(*,*) delta_t
 
-      OPEN(UNIT=10, FILE='euler_posicao.dat', STATUS='UNKNOWN')
+      OPEN(UNIT=10, FILE='euler_energia.dat', STATUS='UNKNOWN')
 
 C     Calcular o período
       T = (2*PI)*(1 + (1/4)*(SIN(theta/2))**2 + 
@@ -26,8 +26,10 @@ C     Posição
         temp = omega
         omega = omega - SIN(theta)*delta_t
         theta = theta + temp*delta_t  
-        WRITE(10,*) (i*delta_t), theta
+        energia = (9.8**2)*(1 - COS(theta) + ((omega**2)/2))
+        WRITE(10,*) (i*delta_t), energia
       END DO
         
       END PROGRAM 
+
 
